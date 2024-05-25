@@ -35,6 +35,15 @@ npm run docker:run
 http://localhost:5173
 ```
 
+## 🚀 Deploy do projeto
+
+Acesse o seguinte link para acessar o deploy do projeto:
+
+```bash
+
+https://frontend-crm-vendas.vercel.app/
+```
+
 <br><br>
 
 ### 👩🏽‍💻 Desenvolvido por Talita Araujo
