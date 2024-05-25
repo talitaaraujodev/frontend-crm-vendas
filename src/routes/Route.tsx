@@ -17,7 +17,7 @@ export function MainRoutes() {
           <Route path="/" element={<ListAgentsPage />}></Route>
         </Route>
         <Route element={<Layout />}>
-          <Route path="/create-client" element={<NewCustomerPage />}></Route>
+          <Route path="/create-customer" element={<NewCustomerPage />}></Route>
         </Route>
         <Route element={<Layout />}>
           <Route path="/create-agent" element={<NewAgentPage />}></Route>

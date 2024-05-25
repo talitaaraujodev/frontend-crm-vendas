@@ -35,7 +35,7 @@ const Sidebar = ({ openSidebar }: SidebarProps) => {
           </Link>
         </li>
         <li className="group font-medium text-[#1B2128] text-[1rem] px-2 rounded-lg py-3 flex items-center hover:bg-[#2d5bff] hover:text-white hover:cursor-pointer">
-          <Link to="/create-client" className="flex items-center w-full">
+          <Link to="/create-customer" className="flex items-center w-full">
             <FilePlus className="pr-1 group-hover:text-white text-[#9dacbe]" />
             Criar cliente
           </Link>
