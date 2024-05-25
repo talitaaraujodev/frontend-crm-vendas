@@ -10,7 +10,7 @@ interface ModalUpdateProps {
   data: DataType;
   isOpen: boolean;
   onClose: () => void;
-  handleClickUpdate: (data: DataType) => Promise<void>;
+  handleClickUpdate: (data: any) => void;
 }
 
 const ModalUpdate: React.FC<ModalUpdateProps> = ({

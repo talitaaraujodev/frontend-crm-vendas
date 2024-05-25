@@ -132,11 +132,11 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
               Número
             </label>
             <input
-              type="text"
+              type="number"
               disabled={true}
               name="number"
               id="number"
-              value={utils.maskCurrency(customer.address.number)}
+              value={customer.address.number}
               className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
             />
           </div>
