@@ -33,7 +33,7 @@ const customerService = {
     }
 
     const url = `/customers/report?${queryParams}`;
-    console.log("URL:", url);
+
     return await fetch("GET", url);
   },
   async findOneCustomer(id: string) {

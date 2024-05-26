@@ -57,6 +57,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
     };
     handleClickUpdate(data);
     toast.success("Cliente atualizado com sucesso");
+    onClose();
   };
 
   const fetchAgents = async () => {
@@ -185,7 +186,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
               id="saleValue"
               value={updatedCustomer.saleValue}
               onChange={handleSaleValueChange}
-              className="w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
+              className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
             />
           </div>
         ) : null}

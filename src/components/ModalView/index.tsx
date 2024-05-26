@@ -32,7 +32,7 @@ const ModalView: React.FC<ModalViewProps> = ({
           onClick={onClose}
         />
         <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-3xl w-full">
-          <div className="bg-[#0062B7] px-4 py-3 flex justify-between items-center">
+          <div className="bg-[#0062B7] px-3 py-3 flex justify-between items-center">
             <h2 className="text-lg font-semibold text-white ">
               {isCustomer
                 ? `Visualizar Cliente #${data.id}`

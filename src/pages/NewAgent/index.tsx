@@ -24,6 +24,7 @@ const NewAgentPage: React.FC = () => {
           return;
         } else {
           toast.success("Agente criado com sucessso!");
+          setName("");
         }
       })
       .catch((error) => {

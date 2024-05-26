@@ -94,7 +94,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
         className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 mb-4"
       />
       {customer.status === utils.customerStatusTypes.Sold && (
-        <div className="flex flex-col py-2 mb-4">
+        <div className="flex flex-col py-2 mb-4 w-full">
           <label
             className="py-1 text-[#181818] text-base font-medium"
             htmlFor="saleValue"
@@ -106,7 +106,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
             disabled={true}
             name="saleValue"
             id="saleValue"
-            value={customer.saleValue}
+            value={utils.maskCurrency(Number(customer.saleValue))}
             className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
           />
         </div>

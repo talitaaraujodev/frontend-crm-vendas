@@ -46,4 +46,15 @@ export const utils = {
     value = value.replace(/(\d)(\d{4})$/, "$1-$2");
     return value;
   },
+
+  maskCurrency(value: number) {
+    if (isNaN(value)) {
+      value = 0;
+    }
+
+    return value.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  },
 };

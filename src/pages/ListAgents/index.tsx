@@ -93,7 +93,7 @@ const ListAgentsPage: React.FC = () => {
     fetchAgents();
   }, []);
 
-  const headers: string[] = ["#", "Nome", "Status", "Criado em", "Ações"];
+  const headers: string[] = ["#", "Nome", "Status", "Criado há", "Ações"];
 
   const data = agents.map((agent) => [
     agent.id,

@@ -1,6 +1,6 @@
 import { Download } from "lucide-react";
 import { useEffect, useState } from "react";
-import { formatDistanceToNow, formatDate } from "date-fns";
+import { formatDistanceToNow, formatDate, format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { utils } from "../../utils";
 import { agentService } from "../../services/agentService";
@@ -57,7 +57,13 @@ const ReportGeneratePage: React.FC = () => {
     }
   };
 
+  const isValidDate = (date: string) => {
+    return !isNaN(new Date(date).getTime());
+  };
+
   const generatePDF = () => {
+    console.log("Customers:", customers);
+
     const agentLabel = agent ? agent.label : "Todos";
     const statusLabel = statusCustomer
       ? utils.statusCustomerOptions.find((s) => s.value === statusCustomer)
@@ -71,10 +77,9 @@ const ReportGeneratePage: React.FC = () => {
 
     doc.setFontSize(14);
     doc.text(
-      `Período: ${formatDate(startDate, "dd/MM/yyyy")} - ${formatDate(
-        endDate,
-        "dd/MM/yyyy"
-      )}`,
+      `Período: ${startDate} -  ${
+        isValidDate(endDate) ? formatDate(endDate, "dd/MM/yyyy") : ""
+      }`,
       10,
       30
     );
@@ -91,12 +96,16 @@ const ReportGeneratePage: React.FC = () => {
 
     const tableRows = customers.map((customer: any) => [
       customer.name,
-      formatDate(customer.createdAt, "dd/MM/yyyy"),
+      isValidDate(customer.createdAt)
+        ? format(new Date(customer.createdAt), "dd/MM/yyyy")
+        : "",
       utils.verifyCustomerStatus(customer.status),
-      formatDistanceToNow(customer.updatedAt, {
-        locale: ptBR,
-        addSuffix: true,
-      }),
+      isValidDate(customer.updatedAt)
+        ? formatDistanceToNow(new Date(customer.updatedAt), {
+            locale: ptBR,
+            addSuffix: true,
+          })
+        : "",
       customer.agent.name,
     ]);
 
@@ -123,7 +132,7 @@ const ReportGeneratePage: React.FC = () => {
           agent.value
         );
         setCustomers(response.customers);
-        console.log(response);
+        console.log("AQUI :)", response);
       } catch (error) {
         console.error("Error ao listar customers:", error);
       }

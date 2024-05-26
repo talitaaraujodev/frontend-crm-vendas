@@ -33,9 +33,9 @@ const FormUpdateAgent: React.FC<FormUpdateAgentProps> = ({
       status: status === "ATIVO" ? "ACTIVE" : "INACTIVE",
     } as Agent;
 
-    await handleClickUpdate(updatedAgent);
+    handleClickUpdate(updatedAgent);
     toast.success("Agente atualizado com sucesso");
-    onClose(); // Fechar modal após atualização
+    onClose();
   };
 
   return (
