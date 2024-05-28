@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.loader-container {
+  @apply flex justify-center items-center fixed top-0 left-0 w-full h-full bg-white bg-opacity-50 z-50;
+}

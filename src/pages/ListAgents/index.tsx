@@ -8,6 +8,7 @@ import Tbody from "../../components/Tbody";
 import ModalConfirmRemove from "../../components/ModalConfirmDelete";
 import ModalView from "../../components/ModalView";
 import ModalUpdate from "../../components/ModalUpdate";
+import Loader from "../../components/Loader";
 import { agentService } from "../../services/agentService";
 import { utils } from "../../utils";
 
@@ -25,6 +26,7 @@ const ListAgentsPage: React.FC = () => {
     useState<boolean>(false);
   const [updateModalOpen, setUpdateModalOpen] = useState<boolean>(false);
   const [viewModalOpen, setViewModalOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [id, setId] = useState<string>("");
 
   function openConfirmRemoveModal(id: string) {
@@ -86,6 +88,9 @@ const ListAgentsPage: React.FC = () => {
     try {
       const response = await agentService.findAgents();
       setAgents(response.agents);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     } catch (error) {
       console.error("Error ao listar agentes:", error);
     }
@@ -151,13 +156,16 @@ const ListAgentsPage: React.FC = () => {
 
   return (
     <div className="container mx-auto p-7">
-      <div className="overflow-x-auto shadow-lg rounded-md border-2">
-        <table className="min-w-full">
-          <Thead headers={headers} title="Agentes" />
-          <Tbody data={data} />
-        </table>
-      </div>
-
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="overflow-x-auto shadow-lg rounded-md border-2">
+          <table className="min-w-full">
+            <Thead headers={headers} title="Agentes" />
+            <Tbody data={data} />
+          </table>
+        </div>
+      )}
       <ModalConfirmRemove
         titleRemove="agente"
         isOpen={confirmRemoveModalOpen}

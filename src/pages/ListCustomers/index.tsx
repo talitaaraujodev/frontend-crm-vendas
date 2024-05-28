@@ -8,6 +8,7 @@ import ModalUpdate from "../../components/ModalUpdate";
 import { customerService } from "../../services/customerService";
 import { utils } from "../../utils";
 import { toast } from "sonner";
+import Loader from "../../components/Loader";
 
 const ListCustomersPage: React.FC = () => {
   const [customerSelected, setCustomerSelected] = useState<Customer>({
@@ -35,6 +36,7 @@ const ListCustomersPage: React.FC = () => {
     useState<boolean>(false);
   const [viewModalOpen, setViewModalOpen] = useState<boolean>(false);
   const [updateModalOpen, setUpdateModalOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [id, setId] = useState<string>("");
 
   function openConfirmRemoveModal(id: string) {
@@ -102,9 +104,10 @@ const ListCustomersPage: React.FC = () => {
   const fetchCustomers = async () => {
     try {
       const response = await customerService.findCustomers();
-      console.log("aqui", response);
-      console.log(response);
       setCustomers(response.customers);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     } catch (error) {
       console.error("Error ao listar customers:", error);
     }
@@ -163,13 +166,16 @@ const ListCustomersPage: React.FC = () => {
 
   return (
     <div className="container mx-auto p-7">
-      <div className="overflow-x-auto shadow-lg rounded-md border-2">
-        <table className="min-w-full">
-          <Thead headers={headers} title="Clientes" />
-          <Tbody data={data} />
-        </table>
-      </div>
-
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="overflow-x-auto shadow-lg rounded-md border-2">
+          <table className="min-w-full">
+            <Thead headers={headers} title="Clientes" />
+            <Tbody data={data} />
+          </table>
+        </div>
+      )}
       <ModalConfirmRemove
         titleRemove="cliente"
         isOpen={confirmRemoveModalOpen}
