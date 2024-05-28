@@ -2,12 +2,13 @@ import fetch from "../helpers/ApiConfig";
 import { Agent } from "./models/Agent";
 
 const agentService = {
-  async createAgent(name: string) {
-    return await fetch("POST", "/agents", { name });
+  async createAgent(name: string, email: string) {
+    return await fetch("POST", "/agents", { name, email });
   },
   async updateAgent(id: string, agent: Agent) {
     return await fetch("PUT", `/agents/${id}`, {
       name: agent.name,
+      email: agent.email,
       status: agent.status,
     });
   },

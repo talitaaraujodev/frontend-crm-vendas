@@ -102,6 +102,7 @@ const ListCustomersPage: React.FC = () => {
   const fetchCustomers = async () => {
     try {
       const response = await customerService.findCustomers();
+      console.log("aqui", response);
       console.log(response);
       setCustomers(response.customers);
     } catch (error) {

@@ -4,15 +4,19 @@ import { toast } from "sonner";
 
 const NewAgentPage: React.FC = () => {
   const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
+  };
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await agentService
-      .createAgent(name)
+      .createAgent(name, email)
       .then((response) => {
         const errors = response.errors;
         if (errors) {
@@ -25,6 +29,7 @@ const NewAgentPage: React.FC = () => {
         } else {
           toast.success("Agente criado com sucessso!");
           setName("");
+          setEmail("");
         }
       })
       .catch((error) => {
@@ -51,6 +56,19 @@ const NewAgentPage: React.FC = () => {
               className="outline-none border border-[#D7D7D7] rounded-md p-1 focus:border-[#2d5bff]"
               value={name}
               onChange={handleNameChange}
+            />
+          </div>
+          <div className="flex flex-col py-2">
+            <label htmlFor="email" className="font-medium text-base pb-2">
+              E-mail
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              className="outline-none border border-[#D7D7D7] rounded-md p-1 focus:border-[#2d5bff]"
+              value={email}
+              onChange={handleEmailChange}
             />
           </div>
           <div className="flex items-center justify-end pt-4">

@@ -7,7 +7,7 @@ export const utils = {
     { value: "SOLD", label: "Vendido" },
   ],
   agentStatusTypes: {
-    Active: "ACTIVO",
+    Active: "ACTIVE",
     Inactive: "INACTIVE",
   },
   customerStatusTypes: {

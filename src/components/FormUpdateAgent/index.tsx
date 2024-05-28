@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Agent } from "../../services/models/Agent";
 import { toast } from "sonner";
+import { utils } from "../../utils";
 
 interface FormUpdateAgentProps {
   agent: Agent;
@@ -14,12 +15,16 @@ const FormUpdateAgent: React.FC<FormUpdateAgentProps> = ({
   onClose,
 }: FormUpdateAgentProps) => {
   const [name, setName] = useState(agent.name);
+  const [email, setEmail] = useState(agent.email);
   const [status, setStatus] = useState(
-    agent.status === "ACTIVE" ? "ATIVO" : "INATIVO"
+    agent.status === utils.agentStatusTypes.Active ? "ATIVO" : "INATIVO"
   );
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
+  };
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
   };
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -30,7 +35,8 @@ const FormUpdateAgent: React.FC<FormUpdateAgentProps> = ({
     const updatedAgent = {
       ...agent,
       name,
-      status: status === "ATIVO" ? "ACTIVE" : "INACTIVE",
+      email,
+      status: status === utils.agentStatusTypes.Active ? "ACTIVE" : "INACTIVE",
     } as Agent;
 
     handleClickUpdate(updatedAgent);
@@ -50,6 +56,17 @@ const FormUpdateAgent: React.FC<FormUpdateAgentProps> = ({
           id="name"
           value={name}
           onChange={handleNameChange}
+          className="w-full outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
+        />
+        <label htmlFor="email" className="font-medium text-base pb-2">
+          E-mail
+        </label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          value={email}
+          onChange={handleEmailChange}
           className="w-full outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
         />
 

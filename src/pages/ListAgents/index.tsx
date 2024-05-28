@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
+import { toast } from "sonner";
 import { ptBR } from "date-fns/locale";
 import { Agent } from "../../services/models/Agent";
 import Thead from "../../components/Thead";
@@ -8,12 +9,13 @@ import ModalConfirmRemove from "../../components/ModalConfirmDelete";
 import ModalView from "../../components/ModalView";
 import ModalUpdate from "../../components/ModalUpdate";
 import { agentService } from "../../services/agentService";
-import { toast } from "sonner";
+import { utils } from "../../utils";
 
 const ListAgentsPage: React.FC = () => {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [agentSelected, setAgentSelected] = useState<Agent>({
     id: "",
+    email: "",
     name: "",
     status: "ACTIVE",
     createdAt: new Date(),
@@ -93,19 +95,27 @@ const ListAgentsPage: React.FC = () => {
     fetchAgents();
   }, []);
 
-  const headers: string[] = ["#", "Nome", "Status", "Criado há", "Ações"];
+  const headers: string[] = [
+    "#",
+    "Nome",
+    "E-mail",
+    "Status",
+    "Criado há",
+    "Ações",
+  ];
 
   const data = agents.map((agent) => [
     agent.id,
     agent.name,
+    agent.email,
     <p
       className={`inline-block text-sm rounded-2xl py-[0.40rem] px-2.5 ${
-        agent.status === "ACTIVE"
+        agent.status === utils.agentStatusTypes.Active
           ? "bg-green-100 text-green-700"
           : "bg-red-100 text-red-700"
       }`}
     >
-      {agent.status === "ACTIVE" ? "Ativo" : "Inativo"}
+      {agent.status === utils.agentStatusTypes.Active ? "Ativo" : "Inativo"}
     </p>,
     formatDistanceToNow(agent.createdAt, { locale: ptBR, addSuffix: true }),
 
