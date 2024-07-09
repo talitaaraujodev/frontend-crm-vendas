@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import { useState } from "react";
 
 const Layout: React.FC = () => {
-  const [openSidebar, setOpenSidebar] = useState<boolean>(false);
+  const [openSidebar, setOpenSidebar] = useState<boolean>(true);
   return (
     <div className="fixed flex flex-col w-full h-full">
       <Header openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />

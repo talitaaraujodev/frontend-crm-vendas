@@ -1,8 +1,9 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 import { customerService } from "../../services/customerService";
 import { toast } from "sonner";
 import { Customer } from "../../services/models/Customer";
 import { utils } from "../../utils";
+import { ArrowRight } from "lucide-react";
 
 const NewCustomerPage: React.FC = () => {
   const [customer, setCustomer] = useState({
@@ -87,6 +88,47 @@ const NewCustomerPage: React.FC = () => {
       });
   };
 
+  const handleSearchAddressByCEP = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_URL_API_CEP}${customer.address.zipcode}/json`,
+        {
+          method: "GET",
+          headers: { "content-type": "application/json" },
+          mode: "cors",
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setCustomer({
+          ...customer,
+          address: {
+            ...customer.address,
+            street: result.logradouro,
+            bairro: result.bairro,
+          },
+        });
+      } else {
+        toast.error(
+          "CEP não foi encontrado, verifique o CEP e tente novamente."
+        );
+        return;
+      }
+    } catch (error) {
+      toast.error("CEP não foi encontrado, verifique o CEP e tente novamente.");
+      console.error("Erro ao buscar endereço:", error);
+    }
+  };
+
+  const handleKeyDownSearchAddress = async (
+    event: KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key === "Enter") await handleSearchAddressByCEP();
+    return null;
+  };
+
   return (
     <div className="container mx-auto p-7">
       <div className="overflow-x-auto shadow-md rounded-md border-2 bg-white p-4">
@@ -99,10 +141,11 @@ const NewCustomerPage: React.FC = () => {
               Nome
             </label>
             <input
+              placeholder="Nome"
               type="text"
               name="name"
               id="name"
-              className="outline-none border border-[#D7D7D7] rounded-md p-1 focus:border-[#2d5bff]"
+              className="outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
               value={customer.name}
               onChange={handleCustomerChange}
             />
@@ -112,10 +155,11 @@ const NewCustomerPage: React.FC = () => {
               E-mail
             </label>
             <input
+              placeholder="E-mail"
               type="email"
               name="email"
               id="email"
-              className="outline-none border border-[#D7D7D7] rounded-md p-1 focus:border-[#2d5bff]"
+              className="outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
               value={customer.email}
               onChange={handleCustomerChange}
             />
@@ -125,10 +169,11 @@ const NewCustomerPage: React.FC = () => {
               Telefone
             </label>
             <input
+              placeholder="Telefone"
               type="tel"
               name="phone"
               id="phone"
-              className="outline-none border border-[#D7D7D7] rounded-md p-1 focus:border-[#2d5bff]"
+              className="outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
               value={customer.phone}
               maxLength={15}
               required
@@ -143,10 +188,11 @@ const NewCustomerPage: React.FC = () => {
                   Logradouro
                 </label>
                 <input
+                  placeholder="Logradouro"
                   type="text"
                   name="street"
                   id="street"
-                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-1 focus:border-[#2d5bff]"
+                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
                   value={customer.address.street}
                   onChange={handleAddressChange}
                   required
@@ -157,10 +203,11 @@ const NewCustomerPage: React.FC = () => {
                   Número
                 </label>
                 <input
+                  placeholder="Número"
                   type="text"
                   name="number"
                   id="number"
-                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-1 focus:border-[#2d5bff]"
+                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
                   value={customer.address.number}
                   onChange={handleAddressChange}
                   required
@@ -171,14 +218,16 @@ const NewCustomerPage: React.FC = () => {
                   CEP
                 </label>
                 <input
+                  placeholder="CEP"
                   type="text"
                   name="zipcode"
                   id="zipcode"
-                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-1 focus:border-[#2d5bff]"
+                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
                   value={customer.address.zipcode}
                   onChange={handleAddressChange}
                   required
                   maxLength={9}
+                  onKeyDown={(e) => handleKeyDownSearchAddress(e)}
                 />
               </div>
             </div>
@@ -189,10 +238,11 @@ const NewCustomerPage: React.FC = () => {
                   Bairro
                 </label>
                 <input
+                  placeholder="Bairro"
                   type="text"
                   name="bairro"
                   id="bairro"
-                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-1 focus:border-[#2d5bff]"
+                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
                   value={customer.address.bairro}
                   onChange={handleAddressChange}
                   required
@@ -203,10 +253,11 @@ const NewCustomerPage: React.FC = () => {
                   Cidade
                 </label>
                 <input
+                  placeholder="Cidade"
                   type="text"
                   name="city"
                   id="city"
-                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-1 focus:border-[#2d5bff]"
+                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
                   value={customer.address.city}
                   onChange={handleAddressChange}
                   required
@@ -220,10 +271,11 @@ const NewCustomerPage: React.FC = () => {
                   Complemento
                 </label>
                 <input
+                  placeholder="Complemento"
                   type="text"
                   name="complement"
                   id="complement"
-                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-1 focus:border-[#2d5bff]"
+                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
                   value={customer.address.complement}
                   onChange={handleAddressChange}
                   required
@@ -233,10 +285,12 @@ const NewCustomerPage: React.FC = () => {
           </div>
           <div className="flex items-center justify-end pt-4">
             <button
-              className="bg-[#2d5bff] text-white font-normal rounded-md py-2 px-3 hover:opacity-80 transition-all cursor-pointer"
+              className="bg-[#2d5bff] text-white font-normal rounded-md py-2 px-3 hover:opacity-80 transition-all cursor-pointer flex items-center space-x-1"
               type="submit"
             >
-              Enviar
+              <span> Enviar</span>
+
+              <ArrowRight />
             </button>
           </div>
         </form>

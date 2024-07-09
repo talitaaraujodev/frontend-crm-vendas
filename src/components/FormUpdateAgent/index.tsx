@@ -47,7 +47,7 @@ const FormUpdateAgent: React.FC<FormUpdateAgentProps> = ({
   return (
     <>
       <form className="flex flex-col items-start p-4">
-        <label htmlFor="name" className="font-medium text-base pb-2">
+        <label htmlFor="name" className="font-medium text-base py-2">
           Nome
         </label>
         <input
@@ -58,7 +58,7 @@ const FormUpdateAgent: React.FC<FormUpdateAgentProps> = ({
           onChange={handleNameChange}
           className="w-full outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
         />
-        <label htmlFor="email" className="font-medium text-base pb-2">
+        <label htmlFor="email" className="font-medium text-base py-2">
           E-mail
         </label>
         <input
@@ -70,7 +70,7 @@ const FormUpdateAgent: React.FC<FormUpdateAgentProps> = ({
           className="w-full outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
         />
 
-        <label htmlFor="status" className="font-medium text-base pb-2">
+        <label htmlFor="status" className="font-medium text-base py-2">
           Status
         </label>
         <select

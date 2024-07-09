@@ -79,7 +79,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
         <div className="flex flex-col md:flex-row w-full mb-4">
           <div className="md:w-1/2 pr-2">
             <label
-              className="py-1 text-[#181818] text-base font-medium"
+              className="py-1.5 text-[#181818] text-base font-medium"
               htmlFor="name"
             >
               Nome
@@ -95,7 +95,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
           </div>
           <div className="md:w-1/2 pl-2">
             <label
-              className="py-1 text-[#181818] text-base font-medium"
+              className="py-1.5 text-[#181818] text-base font-medium"
               htmlFor="email"
             >
               E-mail
@@ -114,7 +114,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
         <div className="flex flex-col md:flex-row w-full">
           <div className="md:w-1/2">
             <label
-              className="py-1 text-[#181818] text-base font-medium"
+              className="py-1.5 text-[#181818] text-base font-medium"
               htmlFor="phone"
             >
               Telefone
@@ -130,7 +130,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
           </div>
           <div className="md:w-1/2 pl-2">
             <label
-              className="py-1 text-[#181818] text-base font-medium"
+              className="py-1.5 text-[#181818] text-base font-medium"
               htmlFor="agent"
             >
               Agente
@@ -153,7 +153,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
         </div>
 
         <label
-          className="py-1 text-[#181818] text-base font-medium"
+          className="py-1.5 text-[#181818] text-base font-medium"
           htmlFor="status"
         >
           Status
@@ -175,7 +175,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
         updatedCustomer.status === utils.customerStatusTypes.Sold ? (
           <div className="flex flex-col py-2 w-full">
             <label
-              className="py-1 text-[#181818] text-base font-medium"
+              className="py-1.5 text-[#181818] text-base font-medium"
               htmlFor="saleValue"
             >
               Valor da Venda
@@ -191,7 +191,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
           </div>
         ) : null}
 
-        <h3 className="py-1 text-[#181818] text-base font-medium">Endereço</h3>
+        <h3 className="py-1.5 text-[#181818] text-base font-medium">Endereço</h3>
         <div className="flex flex-col py-2">
           <div className="-mx-3 md:flex mb-6">
             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
@@ -223,7 +223,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
 
             <div className="md:w-1/2 pl-2">
               <label
-                className="py-1 text-[#181818] text-base font-medium"
+                className="py-1.5 text-[#181818] text-base font-medium"
                 htmlFor="zipccode"
               >
                 CEP

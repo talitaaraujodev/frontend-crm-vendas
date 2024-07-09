@@ -14,7 +14,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
       <div className="flex flex-col md:flex-row w-full mb-4">
         <div className="w-full md:w-1/2 md:pr-2 mb-4 md:mb-0">
           <label
-            className="py-1 text-[#181818] text-base font-medium"
+            className="py-1 text-[#181818] text-base pb-1 font-medium"
             htmlFor="name"
           >
             Nome
@@ -25,12 +25,12 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
             name="name"
             id="name"
             value={customer.name}
-            className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
+            className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
           />
         </div>
         <div className="w-full md:w-1/2 md:pl-2">
           <label
-            className="py-1 text-[#181818] text-base font-medium"
+            className="py-1 text-[#181818] text-base pb-1 font-medium"
             htmlFor="email"
           >
             E-mail
@@ -41,14 +41,14 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
             name="email"
             id="email"
             value={customer.email}
-            className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
+            className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
           />
         </div>
       </div>
       <div className="flex flex-col md:flex-row w-full mb-4">
         <div className="w-full md:w-1/2 md:pr-2 mb-4 md:mb-0">
           <label
-            className="py-1 text-[#181818] text-base font-medium"
+            className="py-1 text-[#181818] text-base pb-1 font-medium"
             htmlFor="agent"
           >
             Agente
@@ -59,12 +59,12 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
             name="agent"
             id="agent"
             value={customer.agent.name}
-            className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
+            className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
           />
         </div>
         <div className="w-full md:w-1/2 md:pl-2">
           <label
-            className="py-1 text-[#181818] text-base font-medium"
+            className="py-1 text-[#181818] text-base pb-1 font-medium"
             htmlFor="phone"
           >
             Telefone
@@ -75,12 +75,12 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
             name="phone"
             id="phone"
             value={utils.maskPhone(customer.phone)}
-            className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
+            className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
           />
         </div>
       </div>
       <label
-        className="py-1 text-[#181818] text-base font-medium"
+        className="py-1 text-[#181818] text-base pb-1 font-medium"
         htmlFor="status"
       >
         Status
@@ -91,12 +91,12 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
         name="status"
         id="status"
         value={utils.verifyCustomerStatus(customer.status) || ""}
-        className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 mb-4"
+        className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200 mb-4"
       />
       {customer.status === utils.customerStatusTypes.Sold && (
         <div className="flex flex-col py-2 mb-4 w-full">
           <label
-            className="py-1 text-[#181818] text-base font-medium"
+            className="py-1 text-[#181818] text-base pb-1 font-medium"
             htmlFor="saleValue"
           >
             Valor da Venda
@@ -107,11 +107,11 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
             name="saleValue"
             id="saleValue"
             value={utils.maskCurrency(Number(customer.saleValue))}
-            className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
+            className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
           />
         </div>
       )}
-      <h3 className="py-1 text-[#181818] text-base font-medium">Endereço</h3>
+      <h3 className="py-1 text-[#181818] text-base pb-1 font-medium">Endereço</h3>
       <div className="flex flex-col py-2">
         <div className="-mx-3 md:flex mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -124,7 +124,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
               name="street"
               id="street"
               value={customer.address.street}
-              className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
+              className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
             />
           </div>
           <div className="w-full md:w-1/2 px-3">
@@ -137,7 +137,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
               name="number"
               id="number"
               value={customer.address.number}
-              className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
+              className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
             />
           </div>
           <div className="w-full md:w-1/2 px-3">
@@ -149,7 +149,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
               disabled={true}
               name="zipcode"
               id="zipcode"
-              className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
+              className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
               value={utils.maskCEP(customer.address.zipcode)}
             />
           </div>
@@ -165,7 +165,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
               name="bairro"
               id="bairro"
               value={customer.address.bairro}
-              className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
+              className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
             />
           </div>
           <div className="w-full md:w-1/2 px-3">
@@ -178,7 +178,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
               name="city"
               id="city"
               value={customer.address.city}
-              className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
+              className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
             />
           </div>
           <div className="w-full md:w-1/2 px-3">
@@ -191,7 +191,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
               name="complement"
               id="complement"
               value={customer.address.complement}
-              className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
+              className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
             />
           </div>
         </div>

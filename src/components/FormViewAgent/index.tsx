@@ -10,7 +10,7 @@ const FormViewAgent: React.FC<FormViewAgentProps> = ({
 }: FormViewAgentProps) => {
   return (
     <form className="flex flex-col items-start p-4" action="get">
-      <label className="text-[#181818] text-base font-medium" htmlFor="name">
+      <label className="text-[#181818] text-base font-medium pb-1" htmlFor="name">
         Nome
       </label>
       <input
@@ -19,10 +19,10 @@ const FormViewAgent: React.FC<FormViewAgentProps> = ({
         name="name"
         id="name"
         value={agent.name}
-        className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
+        className="block w-full outline-none  p-2  cursor-not-allowed rounded-md font-normal disabled:bg-gray-100  disabled:text-slate-400 disabled:border-slate-200"
       />
 
-      <label className="text-[#181818] text-base font-medium" htmlFor="status">
+      <label className="text-[#181818] text-base font-medium pb-1" htmlFor="status">
         E-mail
       </label>
       <input
@@ -31,21 +31,14 @@ const FormViewAgent: React.FC<FormViewAgentProps> = ({
         name="email"
         id="email"
         value={agent.email}
-        className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
+        className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100  disabled:text-slate-400 disabled:border-slate-200"
       />
-      <label className="text-[#181818] text-base font-medium" htmlFor="status">
+      <label className="text-[#181818] text-base font-medium pb-1" htmlFor="status">
         Status
       </label>
-      <input
-        type="text"
-        disabled={true}
-        name="status"
-        id="status"
-        value={
-          agent.status === utils.agentStatusTypes.Active ? "ATIVO" : "INATIVO"
-        }
-        className="block w-full outline-none p-2 cursor-not-allowed rounded-md disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200"
-      />
+      <span className="block  outline-none bg-green-100 text-green-700 mt-1 rounded-full capitalize min-w-16 py-1.5 text-sm text-center">
+        {agent.status === utils.agentStatusTypes.Active ? "Ativo" : "Inativo"}
+      </span>
     </form>
   );
 };

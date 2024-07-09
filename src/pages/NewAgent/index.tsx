@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { agentService } from "../../services/agentService";
 import { toast } from "sonner";
+import { ArrowRight } from "lucide-react";
 
 const NewAgentPage: React.FC = () => {
   const [name, setName] = useState<string>("");
@@ -50,10 +51,11 @@ const NewAgentPage: React.FC = () => {
               Nome
             </label>
             <input
+              placeholder="Nome"
               type="text"
               name="name"
               id="name"
-              className="outline-none border border-[#D7D7D7] rounded-md p-1 focus:border-[#2d5bff]"
+              className="outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
               value={name}
               onChange={handleNameChange}
             />
@@ -63,20 +65,23 @@ const NewAgentPage: React.FC = () => {
               E-mail
             </label>
             <input
+              placeholder="E-mail"
               type="email"
               name="email"
               id="email"
-              className="outline-none border border-[#D7D7D7] rounded-md p-1 focus:border-[#2d5bff]"
+              className="outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
               value={email}
               onChange={handleEmailChange}
             />
           </div>
           <div className="flex items-center justify-end pt-4">
             <button
-              className="bg-[#2d5bff] text-white font-normal rounded-md py-2 px-3 hover:opacity-80 transition-all cursor-pointer"
+              className="bg-[#2d5bff] text-white font-normal rounded-md py-2 px-3 hover:opacity-80 transition-all cursor-pointer flex items-center space-x-1"
               type="submit"
             >
-              Enviar
+              <span> Enviar</span>
+
+              <ArrowRight />
             </button>
           </div>
         </form>

@@ -142,15 +142,6 @@ const ListAgentsPage: React.FC = () => {
       >
         APAGAR
       </button>
-      <span className="text-sm font-medium text-[#181818]">/</span>
-      <button
-        type="button"
-        title="Visualizar agente"
-        className="uppercase text-[#0062B7] hover:underline transition-all font-normal text-sm"
-        onClick={() => openViewModal(agent)}
-      >
-        VER
-      </button>
     </div>,
   ]);
 
@@ -162,7 +153,15 @@ const ListAgentsPage: React.FC = () => {
         <div className="overflow-x-auto shadow-lg rounded-md border-2">
           <table className="min-w-full">
             <Thead headers={headers} title="Agentes" />
-            <Tbody data={data} />
+            <Tbody
+              data={data}
+              openViewModal={(agentId) => {
+                const selectedAgent = agents.find(
+                  (agent) => agent.id === agentId
+                );
+                if (selectedAgent) openViewModal(selectedAgent);
+              }}
+            />
           </table>
         </div>
       )}
