@@ -43,7 +43,7 @@ const NewAgentPage: React.FC = () => {
     <div className="container mx-auto p-7">
       <div className="overflow-x-auto shadow-md rounded-md border-2 bg-white p-4">
         <h2 className="text-[#2d5bff] font-semibold text-xl">
-          Criar Novo Agente
+          Novo Agente
         </h2>
         <form action="" method="post" onSubmit={handleSubmit}>
           <div className="flex flex-col py-2">

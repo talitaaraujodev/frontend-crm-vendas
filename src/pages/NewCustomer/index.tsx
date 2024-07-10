@@ -132,9 +132,7 @@ const NewCustomerPage: React.FC = () => {
   return (
     <div className="container mx-auto p-7">
       <div className="overflow-x-auto shadow-md rounded-md border-2 bg-white p-4">
-        <h2 className="text-[#2d5bff] font-semibold text-xl">
-          Criar Novo Cliente
-        </h2>
+        <h2 className="text-[#2d5bff] font-semibold text-xl">Novo Cliente</h2>
         <form action="" method="post" onSubmit={handleSubmit}>
           <div className="flex flex-col py-2">
             <label htmlFor="name" className="font-medium text-base pb-2">
@@ -183,6 +181,23 @@ const NewCustomerPage: React.FC = () => {
           <div className="flex flex-col py-2">
             <h3 className="font-medium text-base pb-2">Endereço</h3>
             <div className="-mx-3 md:flex mb-6">
+              <div className="md:w-1/2 px-3">
+                <label htmlFor="zipcode" className="font-medium text-sm pb-2">
+                  CEP
+                </label>
+                <input
+                  placeholder="CEP"
+                  type="text"
+                  name="zipcode"
+                  id="zipcode"
+                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
+                  value={customer.address.zipcode}
+                  onChange={handleAddressChange}
+                  required
+                  maxLength={9}
+                  onKeyDown={(e) => handleKeyDownSearchAddress(e)}
+                />
+              </div>
               <div className="md:w-1/2 px-3 mb-6 md:mb-0">
                 <label htmlFor="street" className="font-medium text-sm pb-2">
                   Logradouro
@@ -211,23 +226,6 @@ const NewCustomerPage: React.FC = () => {
                   value={customer.address.number}
                   onChange={handleAddressChange}
                   required
-                />
-              </div>
-              <div className="md:w-1/2 px-3">
-                <label htmlFor="zipcode" className="font-medium text-sm pb-2">
-                  CEP
-                </label>
-                <input
-                  placeholder="CEP"
-                  type="text"
-                  name="zipcode"
-                  id="zipcode"
-                  className="block w-full outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
-                  value={customer.address.zipcode}
-                  onChange={handleAddressChange}
-                  required
-                  maxLength={9}
-                  onKeyDown={(e) => handleKeyDownSearchAddress(e)}
                 />
               </div>
             </div>

@@ -38,6 +38,7 @@ const ListCustomersPage: React.FC = () => {
   const [updateModalOpen, setUpdateModalOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [id, setId] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
 
   function openConfirmRemoveModal(id: string) {
     setId(id);
@@ -91,6 +92,11 @@ const ListCustomersPage: React.FC = () => {
       });
   };
 
+  const handleSearchChange = (query: string) => {
+    setSearch(query);
+    fetchCustomers(query);
+  };
+
   const headers: string[] = [
     "#",
     "Nome",
@@ -101,9 +107,9 @@ const ListCustomersPage: React.FC = () => {
     "Ações",
   ];
 
-  const fetchCustomers = async () => {
+  const fetchCustomers = async (query: string = "") => {
     try {
-      const response = await customerService.findCustomers();
+      const response = await customerService.findCustomers(query);
       setCustomers(response.customers);
       setTimeout(() => {
         setLoading(false);
@@ -162,7 +168,13 @@ const ListCustomersPage: React.FC = () => {
       ) : (
         <div className="overflow-x-auto shadow-lg rounded-md border-2">
           <table className="min-w-full">
-            <Thead headers={headers} title="Clientes" />
+            <Thead
+              headers={headers}
+              title="Clientes"
+              search={search}
+              onChangeSearch={handleSearchChange}
+            />
+
             <Tbody
               data={data}
               openViewModal={(customerId) => {

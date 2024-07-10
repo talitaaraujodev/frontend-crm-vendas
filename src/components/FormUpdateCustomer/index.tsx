@@ -194,6 +194,24 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
         <h3 className="py-1.5 text-[#181818] text-base font-medium">Endereço</h3>
         <div className="flex flex-col py-2">
           <div className="-mx-3 md:flex mb-6">
+            
+          <div className="md:w-1/2 pl-2">
+              <label
+                className="py-1.5 text-[#181818] text-base font-medium"
+                htmlFor="zipccode"
+              >
+                CEP
+              </label>
+              <input
+                type="text"
+                name="zipcode"
+                id="zipcode"
+                value={utils.maskCEP(updatedCustomer.address.zipcode)}
+                onChange={handleAddressChange}
+                className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
+              />
+            </div>
+
             <div className="md:w-1/2 px-3 mb-6 md:mb-0">
               <label className="font-medium text-sm pb-2" htmlFor="street">
                 Logradouro
@@ -221,22 +239,6 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
               />
             </div>
 
-            <div className="md:w-1/2 pl-2">
-              <label
-                className="py-1.5 text-[#181818] text-base font-medium"
-                htmlFor="zipccode"
-              >
-                CEP
-              </label>
-              <input
-                type="text"
-                name="zipcode"
-                id="zipcode"
-                value={utils.maskCEP(updatedCustomer.address.zipcode)}
-                onChange={handleAddressChange}
-                className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
-              />
-            </div>
           </div>
 
           <div className="-mx-3 md:flex mb-2">

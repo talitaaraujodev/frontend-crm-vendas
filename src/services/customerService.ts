@@ -1,16 +1,31 @@
 import fetch from "../helpers/ApiConfig";
 import { Customer } from "./models/Customer";
 
-const customerService = {
+class CustomerService {
+  private sufix: string;
+
+  constructor() {
+    this.sufix = "/customers";
+  }
+
   async createCustomer(customer: Customer) {
-    return await fetch("POST", "/customers", customer);
-  },
+    return await fetch("POST", this.sufix, customer);
+  }
+
   async updateCustomer(id: string, customer: Customer) {
-    return await fetch("PUT", `/customers/${id}`, customer);
-  },
-  async findCustomers() {
-    return await fetch("GET", "/customers");
-  },
+    return await fetch("PUT", `${this.sufix}/${id}`, customer);
+  }
+
+  async findCustomers(search = "") {
+    const queryParams = new URLSearchParams();
+
+    if (search) {
+      queryParams.append("search", search);
+    }
+
+    return await fetch("GET", `${this.sufix}?${queryParams}`);
+  }
+
   async findCustomersToReport(
     startDate?: string,
     endDate?: string,
@@ -32,16 +47,19 @@ const customerService = {
       queryParams.append("agentId", agentId);
     }
 
-    const url = `/customers/report?${queryParams}`;
+    const url = `${this.sufix}/report?${queryParams}`;
 
     return await fetch("GET", url);
-  },
+  }
+
   async findOneCustomer(id: string) {
-    return await fetch("GET", `/customers/${id}`);
-  },
+    return await fetch("GET", `${this.sufix}/${id}`);
+  }
+
   async deleteCustomer(id: string) {
-    return await fetch("DELETE", `/customers/${id}`);
-  },
-};
+    return await fetch("DELETE", `${this.sufix}/${id}`);
+  }
+}
+const customerService = new CustomerService();
 
 export { customerService };

@@ -28,6 +28,7 @@ const ListAgentsPage: React.FC = () => {
   const [viewModalOpen, setViewModalOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [id, setId] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
 
   function openConfirmRemoveModal(id: string) {
     setId(id);
@@ -84,9 +85,14 @@ const ListAgentsPage: React.FC = () => {
       });
   };
 
-  const fetchAgents = async () => {
+  const handleSearchChange = (query: string) => {
+    setSearch(query);
+    fetchAgents(query);
+  };
+
+  const fetchAgents = async (query: string = "") => {
     try {
-      const response = await agentService.findAgents();
+      const response = await agentService.findAgents(query);
       setAgents(response.agents);
       setTimeout(() => {
         setLoading(false);
@@ -152,7 +158,12 @@ const ListAgentsPage: React.FC = () => {
       ) : (
         <div className="overflow-x-auto shadow-lg rounded-md border-2">
           <table className="min-w-full">
-            <Thead headers={headers} title="Agentes" />
+            <Thead
+              headers={headers}
+              title="Agentes"
+              search={search}
+              onChangeSearch={handleSearchChange}
+            />
             <Tbody
               data={data}
               openViewModal={(agentId) => {

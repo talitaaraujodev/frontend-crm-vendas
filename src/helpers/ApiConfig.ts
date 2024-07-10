@@ -15,7 +15,7 @@ const request = async (method: string, sufix: string, body?: any) => {
     }
 
     const requestUrl = `${import.meta.env.VITE_URL_API}${sufix}`;
-    console.log(requestUrl)
+
     const response = await fetch(requestUrl, fetchConfig);
 
     return response.json();
