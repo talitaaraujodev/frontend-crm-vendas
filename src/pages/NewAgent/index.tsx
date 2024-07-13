@@ -76,8 +76,9 @@ const NewAgentPage: React.FC = () => {
           </div>
           <div className="flex items-center justify-end pt-4">
             <button
-              className="bg-[#2d5bff] text-white font-normal rounded-md py-2 px-3 hover:opacity-80 transition-all cursor-pointer flex items-center space-x-1"
+              className="bg-[#2d5bff] text-white font-normal rounded-md py-2 px-3 hover:opacity-80 transition-all cursor-pointer flex items-center space-x-1 disabled:cursor-not-allowed disabled:opacity-75"
               type="submit"
+              disabled={!name || !email}
             >
               <span> Enviar</span>
 

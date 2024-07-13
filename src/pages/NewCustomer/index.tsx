@@ -114,12 +114,29 @@ const NewCustomerPage: React.FC = () => {
         toast.error(
           "CEP não foi encontrado, verifique o CEP e tente novamente."
         );
-        return;
+        clearAddress();
+
       }
     } catch (error) {
-      toast.error("CEP não foi encontrado, verifique o CEP e tente novamente.");
+      toast.error("CEP está inválido, verifique o CEP e tente novamente.");
+      clearAddress();
       console.error("Erro ao buscar endereço:", error);
     }
+  };
+
+
+  const clearAddress = () => {
+    setCustomer({
+      ...customer,
+      address: {
+        bairro: "",
+        complement: "",
+        number: "",
+        city: "",
+        street: "",
+        zipcode: customer.address.zipcode,
+      },
+    });
   };
 
   const handleKeyDownSearchAddress = async (
@@ -127,6 +144,20 @@ const NewCustomerPage: React.FC = () => {
   ) => {
     if (event.key === "Enter") await handleSearchAddressByCEP();
     return null;
+  };
+
+  const isCustomerEmpty = () => {
+    const { address, name, phone } = customer;
+    return (
+      !phone ||
+      !name ||
+      !address.street ||
+      !address.bairro ||
+      !address.complement ||
+      !address.number ||
+      !address.city ||
+      !address.zipcode
+    );
   };
 
   return (
@@ -143,6 +174,7 @@ const NewCustomerPage: React.FC = () => {
               type="text"
               name="name"
               id="name"
+              required
               className="outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
               value={customer.name}
               onChange={handleCustomerChange}
@@ -157,6 +189,7 @@ const NewCustomerPage: React.FC = () => {
               type="email"
               name="email"
               id="email"
+              required
               className="outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
               value={customer.email}
               onChange={handleCustomerChange}
@@ -171,10 +204,10 @@ const NewCustomerPage: React.FC = () => {
               type="tel"
               name="phone"
               id="phone"
+              required
               className="outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
               value={customer.phone}
               maxLength={15}
-              required
               onChange={handleCustomerChange}
             />
           </div>
@@ -190,11 +223,12 @@ const NewCustomerPage: React.FC = () => {
                   type="text"
                   name="zipcode"
                   id="zipcode"
+                  required
                   className="block w-full outline-none border border-[#D7D7D7] rounded-md p-2 focus:border-[#2d5bff]"
                   value={customer.address.zipcode}
                   onChange={handleAddressChange}
-                  required
                   maxLength={9}
+                  minLength={9}
                   onKeyDown={(e) => handleKeyDownSearchAddress(e)}
                 />
               </div>
@@ -283,8 +317,9 @@ const NewCustomerPage: React.FC = () => {
           </div>
           <div className="flex items-center justify-end pt-4">
             <button
-              className="bg-[#2d5bff] text-white font-normal rounded-md py-2 px-3 hover:opacity-80 transition-all cursor-pointer flex items-center space-x-1"
+              className="bg-[#2d5bff] text-white font-normal rounded-md py-2 px-3 hover:opacity-80 transition-all cursor-pointer flex items-center space-x-1 disabled:cursor-not-allowed disabled:opacity-75"
               type="submit"
+              disabled={isCustomerEmpty()}
             >
               <span> Enviar</span>
 

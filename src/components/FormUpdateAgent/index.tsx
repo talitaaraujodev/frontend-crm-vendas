@@ -93,9 +93,10 @@ const FormUpdateAgent: React.FC<FormUpdateAgentProps> = ({
           Cancelar
         </button>
         <button
-          className="bg-[#2d5bff] text-white font-normal rounded-md py-2 px-3 hover:opacity-80 transition-all cursor-pointer"
+          className="bg-[#2d5bff] text-white font-normal rounded-md py-2 px-3 hover:opacity-80 transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-75"
           type="button"
           onClick={handleClickUpdateAgent}
+          disabled={!name || !email || !status}
         >
           Salvar
         </button>

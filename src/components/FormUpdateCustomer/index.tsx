@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { KeyboardEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Customer } from "../../services/models/Customer";
 import { utils } from "../../utils";
@@ -73,6 +73,80 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
     fetchAgents();
   }, []);
 
+  const handleSearchAddressByCEP = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_URL_API_CEP}${
+          updatedCustomer.address.zipcode
+        }/json`,
+        {
+          method: "GET",
+          headers: { "content-type": "application/json" },
+          mode: "cors",
+        }
+      );
+
+      const result = await response.json();
+      if (response.ok) {
+        setUpdatedCustomer({
+          ...customer,
+          address: {
+            ...customer.address,
+            street: result.logradouro,
+            bairro: result.bairro,
+            zipcode: result.cep,
+          },
+        });
+      } else {
+        toast.error(
+          "CEP não foi encontrado, verifique o CEP e tente novamente."
+        );
+        clearAddress();
+      }
+    } catch (error) {
+      toast.error("CEP está inválido, verifique o CEP e tente novamente.");
+      clearAddress();
+      console.error("Erro ao buscar endereço:", error);
+    }
+  };
+
+  const clearAddress = () => {
+    setUpdatedCustomer({
+      ...updatedCustomer,
+      address: {
+        bairro: "",
+        complement: "",
+        number: "",
+        city: "",
+        street: "",
+        zipcode: updatedCustomer.address.zipcode,
+      },
+    });
+  };
+
+  const handleKeyDownSearchAddress = async (
+    event: KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key === "Enter") await handleSearchAddressByCEP();
+    return null;
+  };
+
+  const isCustomerEmpty = () => {
+    const { address, agent, name, phone, status } = updatedCustomer;
+    return (
+      !agent.name ||
+      !phone ||
+      !status ||
+      !name ||
+      !address.street ||
+      !address.bairro ||
+      !address.complement ||
+      !address.number ||
+      !address.city ||
+      !address.zipcode
+    );
+  };
+
   return (
     <>
       <form className="flex flex-col items-start p-4">
@@ -88,6 +162,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
               type="text"
               name="name"
               id="name"
+              required
               value={updatedCustomer.name}
               onChange={handleInputChange}
               className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
@@ -104,6 +179,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
               type="email"
               name="email"
               id="email"
+              required
               value={updatedCustomer.email}
               onChange={handleInputChange}
               className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
@@ -123,6 +199,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
               type="tel"
               name="phone"
               id="phone"
+              required
               value={utils.maskPhone(updatedCustomer.phone)}
               onChange={handleInputChange}
               className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
@@ -138,6 +215,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
             <select
               name="agent"
               id="agent"
+              required
               value={updatedCustomer.agent.name}
               onChange={handleInputChange}
               className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
@@ -161,6 +239,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
         <select
           name="status"
           id="status"
+          required
           value={updatedCustomer.status}
           onChange={handleInputChange}
           className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
@@ -184,6 +263,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
               type="number"
               name="saleValue"
               id="saleValue"
+              required
               value={updatedCustomer.saleValue}
               onChange={handleSaleValueChange}
               className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
@@ -191,11 +271,12 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
           </div>
         ) : null}
 
-        <h3 className="py-1.5 text-[#181818] text-base font-medium">Endereço</h3>
+        <h3 className="py-1.5 text-[#181818] text-base font-medium">
+          Endereço
+        </h3>
         <div className="flex flex-col py-2">
           <div className="-mx-3 md:flex mb-6">
-            
-          <div className="md:w-1/2 pl-2">
+            <div className="md:w-1/2 pl-2">
               <label
                 className="py-1.5 text-[#181818] text-base font-medium"
                 htmlFor="zipccode"
@@ -206,8 +287,12 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
                 type="text"
                 name="zipcode"
                 id="zipcode"
+                maxLength={9}
+                minLength={9}
+                required
                 value={utils.maskCEP(updatedCustomer.address.zipcode)}
                 onChange={handleAddressChange}
+                onKeyDown={(e) => handleKeyDownSearchAddress(e)}
                 className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
               />
             </div>
@@ -220,6 +305,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
                 type="text"
                 name="street"
                 id="street"
+                required
                 value={updatedCustomer.address.street}
                 onChange={handleAddressChange}
                 className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
@@ -233,12 +319,12 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
                 type="text"
                 name="number"
                 id="number"
+                required
                 value={updatedCustomer.address.number}
                 onChange={handleAddressChange}
                 className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
               />
             </div>
-
           </div>
 
           <div className="-mx-3 md:flex mb-2">
@@ -250,6 +336,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
                 type="text"
                 name="bairro"
                 id="bairro"
+                required
                 value={updatedCustomer.address.bairro}
                 onChange={handleAddressChange}
                 className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
@@ -263,6 +350,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
                 type="text"
                 name="city"
                 id="city"
+                required
                 value={updatedCustomer.address.city}
                 onChange={handleAddressChange}
                 className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
@@ -276,6 +364,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
                 type="text"
                 name="complement"
                 id="complement"
+                required
                 value={updatedCustomer.address.complement}
                 onChange={handleAddressChange}
                 className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
@@ -293,9 +382,10 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
           Cancelar
         </button>
         <button
-          className="bg-[#2d5bff] text-white font-normal rounded-md py-2 px-3 hover:opacity-80 transition-all cursor-pointer"
+          className="bg-[#2d5bff] text-white font-normal rounded-md py-2 px-3 hover:opacity-80 transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-75"
           type="button"
           onClick={handleClickUpdateCustomer}
+          disabled={isCustomerEmpty()}
         >
           Salvar
         </button>

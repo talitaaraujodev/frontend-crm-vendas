@@ -16,8 +16,14 @@ const Tbody: React.FC<TbodyProps> = ({ data, openViewModal }) => {
           {row.map((cell, cellIndex) => (
             <td
               key={cellIndex}
-              className="p-3 text-[#181818]"
-              onClick={cellIndex === 0 ? () => openViewModal(row[0]) : undefined}
+              className={`p-3 text-[#181818] ${
+                cellIndex === 0
+                  ? "hover:text-blue-700 hover:underline transition-all"
+                  : ""
+              }`}
+              onClick={
+                cellIndex === 0 ? () => openViewModal(row[0]) : undefined
+              }
             >
               {cell}
             </td>

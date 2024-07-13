@@ -27,7 +27,7 @@ const Thead: React.FC<TheadProps> = ({
               name="search"
               id="search"
               className="border border-gray-300  outline-none rounded-md font-normal text-base p-2 w-4/12 focus:border-[#2d5bff]"
-              placeholder="Pesquisar..."
+              placeholder="Buscar..."
               value={search}
               onChange={(e) => onChangeSearch(e.target.value)}
             />
