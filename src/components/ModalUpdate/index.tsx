@@ -1,8 +1,9 @@
-import { X } from "lucide-react";
+import React from "react";
 import { Customer } from "../../services/models/Customer";
 import { Agent } from "../../services/models/Agent";
 import FormUpdateCustomer from "../FormUpdateCustomer";
 import FormUpdateAgent from "../FormUpdateAgent";
+import Modal from "../Modal";
 
 type DataType = Customer | Agent;
 
@@ -27,44 +28,27 @@ const ModalUpdate: React.FC<ModalUpdateProps> = ({
   const isCustomer = verifyIsCustomer(data);
 
   return (
-    <div className="fixed z-10 inset-0 overflow-y-auto">
-      <div className="flex items-center justify-center min-h-screen">
-        <div
-          className="fixed inset-0 bg-[#6a6e75bf] bg-opacity-75 transition-opacity"
-          onClick={onClose}
+    <Modal
+      title={
+        isCustomer ? `Editar Cliente #${data.id}` : `Editar Agente #${data.id}`
+      }
+      isOpen={isOpen}
+      onClose={onClose}
+    >
+      {isCustomer ? (
+        <FormUpdateCustomer
+          customer={data}
+          onClose={onClose}
+          handleClickUpdate={handleClickUpdate}
         />
-        <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-3xl w-full">
-          <div className="bg-[#0062B7] px-4 py-3 flex justify-between items-center">
-            <h2 className="text-lg font-semibold text-white ">
-              {isCustomer
-                ? `Editar Cliente #${data.id}`
-                : `Editar Agente #${data.id}`}
-            </h2>
-            <button type="button" onClick={() => onClose()}>
-              <X
-                color="#ffff"
-                className="hover:cursor-pointer hover:opacity-85 transition-all"
-                size={25}
-              />
-            </button>
-          </div>
-
-          {isCustomer ? (
-            <FormUpdateCustomer
-              customer={data}
-              onClose={onClose}
-              handleClickUpdate={handleClickUpdate}
-            />
-          ) : (
-            <FormUpdateAgent
-              agent={data}
-              onClose={onClose}
-              handleClickUpdate={handleClickUpdate}
-            />
-          )}
-        </div>
-      </div>
-    </div>
+      ) : (
+        <FormUpdateAgent
+          agent={data}
+          onClose={onClose}
+          handleClickUpdate={handleClickUpdate}
+        />
+      )}
+    </Modal>
   );
 };
 

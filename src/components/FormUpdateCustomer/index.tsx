@@ -200,7 +200,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
               name="phone"
               id="phone"
               required
-              value={utils.maskPhone(updatedCustomer.phone)}
+              value={updatedCustomer.phone}
               onChange={handleInputChange}
               className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
             />
@@ -377,7 +377,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
         <button
           type="button"
           onClick={onClose}
-          className="font-medium bg-white transition-all text-[#2d5bff] py-2 px-4 rounded-md hover:opacity-80"
+          className="font-normal bg-white transition-all text-gray-400 py-2 px-4 rounded-md hover:opacity-80"
         >
           Cancelar
         </button>

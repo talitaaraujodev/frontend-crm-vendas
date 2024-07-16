@@ -1,37 +1,21 @@
 export const utils = {
   statusCustomerOptions: [
-    { value: "WAITING_ATTENDANCE", label: "Aguardando Atendimento" },
-    { value: "IN_ATTENDANCE", label: "Em Atendimento" },
-    { value: "PROPOSAL_MADE", label: "Proposta Feita" },
-    { value: "NOT_CONCLUDED", label: "Não Concluído" },
-    { value: "SOLD", label: "Vendido" },
+    { value: "Aguardando Atendimento", label: "Aguardando Atendimento" },
+    { value: "Em Atendimento", label: "Em Atendimento" },
+    { value: "Proposta Feita", label: "Proposta Feita" },
+    { value: "Não Concluído", label: "Não Concluído" },
+    { value: "Vendido", label: "Vendido" },
   ],
   agentStatusTypes: {
     Active: "ACTIVE",
     Inactive: "INACTIVE",
   },
   customerStatusTypes: {
-    WaitingAttendance: "WAITING_ATTENDANCE",
-    InAttendance: "IN_ATTENDANCE",
-    ProposalMade: "PROPOSAL_MADE",
-    NotConcluded: "NOT_CONCLUDED",
-    Sold: "SOLD",
-  },
-  verifyCustomerStatus: (customerStatus: string) => {
-    switch (customerStatus) {
-      case utils.customerStatusTypes.WaitingAttendance:
-        return "Aguardando Atendimento";
-      case utils.customerStatusTypes.InAttendance:
-        return "Em Atendimento";
-      case utils.customerStatusTypes.ProposalMade:
-        return "Proposta Realizada";
-      case utils.customerStatusTypes.NotConcluded:
-        return "Não Concluído";
-      case utils.customerStatusTypes.Sold:
-        return "Vendido";
-      default:
-        return null;
-    }
+    WaitingAttendance: "Aguardando Atendimento",
+    InAttendance: "Em Atendimento",
+    ProposalMade: "Proposta Feita",
+    NotConcluded: "Não Concluído",
+    Sold: "Vendido",
   },
   maskCEP: (value: string) => {
     if (!value) return "";

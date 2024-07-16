@@ -127,7 +127,7 @@ const ListCustomersPage: React.FC = () => {
     customer.id,
     customer.name,
     customer.email,
-    utils.maskPhone(customer.phone),
+    customer.phone,
     customer.agent.name,
     <p
       className={`inline-block ${
@@ -135,10 +135,12 @@ const ListCustomersPage: React.FC = () => {
           ? "bg-green-100 text-green-700"
           : customer.status === utils.customerStatusTypes.NotConcluded
           ? "bg-red-100 text-red-700"
+          : customer.status === utils.customerStatusTypes.InAttendance
+          ? "bg-blue-100 text-blue-700"
           : "bg-yellow-100 text-yellow-700"
       } text-sm rounded-2xl py-[0.50rem] px-2.5`}
     >
-      {utils.verifyCustomerStatus(customer.status)}
+      {customer.status}
     </p>,
     <div className="flex items-center space-x-1">
       <button

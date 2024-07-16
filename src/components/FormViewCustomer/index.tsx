@@ -90,7 +90,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
         disabled={true}
         name="status"
         id="status"
-        value={utils.verifyCustomerStatus(customer.status) || ""}
+        value={customer.status || ""}
         className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200 mb-4"
       />
       {customer.status === utils.customerStatusTypes.Sold && (
@@ -111,7 +111,9 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
           />
         </div>
       )}
-      <h3 className="py-1 text-[#181818] text-base pb-1 font-medium">Endereço</h3>
+      <h3 className="py-1 text-[#181818] text-base pb-1 font-medium">
+        Endereço
+      </h3>
       <div className="flex flex-col py-2">
         <div className="-mx-3 md:flex mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">

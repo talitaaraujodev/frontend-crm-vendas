@@ -46,10 +46,10 @@ const NewCustomerPage: React.FC = () => {
 
     const data = {
       ...customer,
-      phone: customer.phone.replace(/\D/g, ""),
+      phone: customer.phone,
       address: {
         ...customer.address,
-        zipcode: customer.address.zipcode.replace(/\D/g, ""),
+        zipcode: customer.address.zipcode,
       },
     };
 
@@ -115,7 +115,6 @@ const NewCustomerPage: React.FC = () => {
           "CEP não foi encontrado, verifique o CEP e tente novamente."
         );
         clearAddress();
-
       }
     } catch (error) {
       toast.error("CEP está inválido, verifique o CEP e tente novamente.");
@@ -123,7 +122,6 @@ const NewCustomerPage: React.FC = () => {
       console.error("Erro ao buscar endereço:", error);
     }
   };
-
 
   const clearAddress = () => {
     setCustomer({

@@ -88,7 +88,7 @@ const FormUpdateAgent: React.FC<FormUpdateAgentProps> = ({
         <button
           type="button"
           onClick={onClose}
-          className="font-medium bg-white transition-all text-[#2d5bff] py-2 px-4 rounded-md hover:opacity-80"
+          className="font-normal bg-white transition-all text-gray-400 py-2 px-4 rounded-md hover:opacity-80"
         >
           Cancelar
         </button>
