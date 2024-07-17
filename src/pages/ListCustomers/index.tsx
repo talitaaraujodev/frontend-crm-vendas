@@ -8,7 +8,7 @@ import ModalUpdate from "../../components/ModalUpdate";
 import { customerService } from "../../services/customerService";
 import { utils } from "../../utils";
 import { toast } from "sonner";
-import Loader from "../../components/Loader";
+import Pagination from "../../components/Pagination";
 
 const ListCustomersPage: React.FC = () => {
   const [customerSelected, setCustomerSelected] = useState<Customer>({
@@ -31,36 +31,42 @@ const ListCustomersPage: React.FC = () => {
     status: "",
   });
   const [customers, setCustomers] = useState<Customer[]>([]);
-
   const [confirmRemoveModalOpen, setConfirmRemoveModalOpen] =
     useState<boolean>(false);
   const [viewModalOpen, setViewModalOpen] = useState<boolean>(false);
   const [updateModalOpen, setUpdateModalOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
   const [id, setId] = useState<string>("");
   const [search, setSearch] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   function openConfirmRemoveModal(id: string) {
     setId(id);
     setConfirmRemoveModalOpen(true);
   }
+
   function closeConfirmRemoveModal() {
     setConfirmRemoveModalOpen(false);
   }
+
   function openViewModal(data: Customer) {
     setCustomerSelected(data);
     setViewModalOpen(true);
   }
+
   async function closeViewModal() {
     setViewModalOpen(false);
   }
+
   function openUpdateModal(data: Customer) {
     setCustomerSelected(data);
     setUpdateModalOpen(true);
   }
+
   async function closeUpdateModal() {
     setUpdateModalOpen(false);
   }
+
   const handleRemoveCustomer = async () => {
     await customerService
       .deleteCustomer(id)
@@ -94,7 +100,8 @@ const ListCustomersPage: React.FC = () => {
 
   const handleSearchChange = (query: string) => {
     setSearch(query);
-    fetchCustomers(query);
+    setCurrentPage(1);
+    fetchCustomers(query, 1);
   };
 
   const headers: string[] = [
@@ -107,21 +114,23 @@ const ListCustomersPage: React.FC = () => {
     "Ações",
   ];
 
-  const fetchCustomers = async (query: string = "") => {
+  const fetchCustomers = async (query: string = "", page: number = 1) => {
     try {
-      const response = await customerService.findCustomers(query);
-      setCustomers(response.customers);
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
+      const LIMIT = 10;
+      const response = await customerService.findCustomers(query, LIMIT, page);
+
+      setCustomers(response.customers || []);
+      setTotalPages(
+        response.total !== 1 ? Math.ceil(response.total / LIMIT) : 1
+      );
     } catch (error) {
       console.error("Error ao listar customers:", error);
     }
   };
 
   useEffect(() => {
-    fetchCustomers();
-  }, []);
+    fetchCustomers(search, currentPage);
+  }, [currentPage, search]);
 
   const data: (string | React.ReactNode)[][] = customers.map((customer) => [
     customer.id,
@@ -165,30 +174,33 @@ const ListCustomersPage: React.FC = () => {
 
   return (
     <div className="container mx-auto p-7">
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className="overflow-x-auto shadow-lg rounded-md border-2">
-          <table className="min-w-full">
-            <Thead
-              headers={headers}
-              title="Clientes"
-              search={search}
-              onChangeSearch={handleSearchChange}
-            />
+      <div className="overflow-x-auto shadow-lg rounded-md border-2">
+        <table className="min-w-full">
+          <Thead
+            headers={headers}
+            title="Clientes"
+            search={search}
+            onChangeSearch={handleSearchChange}
+          />
+          <Tbody
+            data={data}
+            openViewModal={(customerId) => {
+              const selectedCustomer = customers.find(
+                (customer) => customer.id === customerId
+              );
+              if (selectedCustomer) openViewModal(selectedCustomer);
+            }}
+          />
+        </table>
+        {customers.length > 0 ? (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        ) : null}
+      </div>
 
-            <Tbody
-              data={data}
-              openViewModal={(customerId) => {
-                const selectedCustomer = customers.find(
-                  (customer) => customer.id === customerId
-                );
-                if (selectedCustomer) openViewModal(selectedCustomer);
-              }}
-            />
-          </table>
-        </div>
-      )}
       <ModalConfirmRemove
         titleRemove="cliente"
         isOpen={confirmRemoveModalOpen}

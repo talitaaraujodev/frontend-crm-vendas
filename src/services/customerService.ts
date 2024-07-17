@@ -16,13 +16,16 @@ class CustomerService {
     return await fetch("PUT", `${this.sufix}/${id}`, customer);
   }
 
-  async findCustomers(search = "") {
-    const queryParams = new URLSearchParams();
-
-    if (search) {
-      queryParams.append("search", search);
-    }
-
+  async findCustomers(
+    search: string = "",
+    limit: number = 1,
+    page: number = 1
+  ) {
+    const queryParams = new URLSearchParams({
+      search,
+      page: page.toString(),
+      limit: limit.toString(),
+    });
     return await fetch("GET", `${this.sufix}?${queryParams}`);
   }
 

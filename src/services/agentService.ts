@@ -18,13 +18,13 @@ class AgentService {
       status: agent.status,
     });
   }
-  async findAgents(search = "") {
-    const queryParams = new URLSearchParams();
-
-    if (search) {
-      queryParams.append("search", search);
-    }
-    return await fetch("GET",  `${this.sufix}?${queryParams}`);
+  async findAgents(search = "", limit: number = 1, page: number = 1) {
+    const queryParams = new URLSearchParams({
+      search,
+      page: page.toString(),
+      limit: limit.toString(),
+    });
+    return await fetch("GET", `${this.sufix}?${queryParams}`);
   }
   async findOneAgent(id: string) {
     return await fetch("GET", `${this.sufix}/${id}`);

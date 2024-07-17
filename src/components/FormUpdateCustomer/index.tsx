@@ -4,7 +4,7 @@ import { Customer } from "../../services/models/Customer";
 import { utils } from "../../utils";
 import { agentService } from "../../services/agentService";
 import { Agent } from "../../services/models/Agent";
-
+import { CurrencyInput } from "react-currency-mask";
 interface FormUpdateCustomerProps {
   customer: Customer;
   handleClickUpdate: (customer: Customer) => void;
@@ -27,7 +27,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
     const { name, value } = e.target;
     setUpdatedCustomer((prevCustomer) => ({
       ...prevCustomer,
-      [name]: name === "saleValue" ? Number(value) : value,
+      [name]: value,
     }));
   };
 
@@ -39,14 +39,6 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
         ...prevCustomer.address,
         [name]: value,
       },
-    }));
-  };
-
-  const handleSaleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setUpdatedCustomer((prevCustomer) => ({
-      ...prevCustomer,
-      saleValue: Number(value),
     }));
   };
 
@@ -146,7 +138,6 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
       !address.zipcode
     );
   };
-
   return (
     <>
       <form className="flex flex-col items-start p-4">
@@ -200,7 +191,9 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
               name="phone"
               id="phone"
               required
-              value={updatedCustomer.phone}
+              value={utils.maskPhone(updatedCustomer.phone)}
+              maxLength={15}
+              minLength={15}
               onChange={handleInputChange}
               className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
             />
@@ -259,13 +252,22 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
             >
               Valor da Venda
             </label>
-            <input
-              type="number"
+            <CurrencyInput
+              placeholder="R$ 0,00"
+              type="text"
               name="saleValue"
               id="saleValue"
-              required
               value={updatedCustomer.saleValue}
-              onChange={handleSaleValueChange}
+              onChangeValue={(
+                event: any,
+                originalValue: any,
+                maskedValue: any
+              ) => {
+                setUpdatedCustomer((prevCustomer: any) => ({
+                  ...prevCustomer,
+                  saleValue: originalValue,
+                }));
+              }}
               className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
             />
           </div>
@@ -279,7 +281,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
             <div className="md:w-1/2 pl-2">
               <label
                 className="py-1.5 text-[#181818] text-base font-medium"
-                htmlFor="zipccode"
+                htmlFor="zipcode"
               >
                 CEP
               </label>

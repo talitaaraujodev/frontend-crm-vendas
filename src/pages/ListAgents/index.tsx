@@ -8,9 +8,9 @@ import Tbody from "../../components/Tbody";
 import ModalConfirmRemove from "../../components/ModalConfirmDelete";
 import ModalView from "../../components/ModalView";
 import ModalUpdate from "../../components/ModalUpdate";
-import Loader from "../../components/Loader";
 import { agentService } from "../../services/agentService";
 import { utils } from "../../utils";
+import Pagination from "../../components/Pagination";
 
 const ListAgentsPage: React.FC = () => {
   const [agents, setAgents] = useState<Agent[]>([]);
@@ -26,9 +26,10 @@ const ListAgentsPage: React.FC = () => {
     useState<boolean>(false);
   const [updateModalOpen, setUpdateModalOpen] = useState<boolean>(false);
   const [viewModalOpen, setViewModalOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
   const [id, setId] = useState<string>("");
   const [search, setSearch] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   function openConfirmRemoveModal(id: string) {
     setId(id);
@@ -90,21 +91,24 @@ const ListAgentsPage: React.FC = () => {
     fetchAgents(query);
   };
 
-  const fetchAgents = async (query: string = "") => {
+  const fetchAgents = async (query: string = "", page: number = 1) => {
     try {
-      const response = await agentService.findAgents(query);
+      const LIMIT = 10;
+      const response = await agentService.findAgents(query, LIMIT, page);
+      console.log("total ", response.total);
+      console.log(" response", response);
+      setTotalPages(
+        response.total !== 1 ? Math.ceil(response.total / LIMIT) : 1
+      );
       setAgents(response.agents);
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
     } catch (error) {
       console.error("Error ao listar agentes:", error);
     }
   };
 
   useEffect(() => {
-    fetchAgents();
-  }, []);
+    fetchAgents(search, currentPage);
+  }, [currentPage, search]);
 
   const headers: string[] = [
     "#",
@@ -153,29 +157,32 @@ const ListAgentsPage: React.FC = () => {
 
   return (
     <div className="container mx-auto p-7">
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className="overflow-x-auto shadow-lg rounded-md border-2">
-          <table className="min-w-full">
-            <Thead
-              headers={headers}
-              title="Agentes"
-              search={search}
-              onChangeSearch={handleSearchChange}
-            />
-            <Tbody
-              data={data}
-              openViewModal={(agentId) => {
-                const selectedAgent = agents.find(
-                  (agent) => agent.id === agentId
-                );
-                if (selectedAgent) openViewModal(selectedAgent);
-              }}
-            />
-          </table>
-        </div>
-      )}
+      <div className="overflow-x-auto shadow-lg rounded-md border-2">
+        <table className="min-w-full">
+          <Thead
+            headers={headers}
+            title="Agentes"
+            search={search}
+            onChangeSearch={handleSearchChange}
+          />
+          <Tbody
+            data={data}
+            openViewModal={(agentId) => {
+              const selectedAgent = agents.find(
+                (agent) => agent.id === agentId
+              );
+              if (selectedAgent) openViewModal(selectedAgent);
+            }}
+          />
+        </table>
+        {agents.length > 0 ? (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        ) : null}
+      </div>
       <ModalConfirmRemove
         titleRemove="agente"
         isOpen={confirmRemoveModalOpen}

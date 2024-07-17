@@ -1,4 +1,5 @@
 import React from "react";
+import { CurrencyInput } from "react-currency-mask";
 import { Customer } from "../../services/models/Customer";
 import { utils } from "../../utils";
 
@@ -21,7 +22,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
           </label>
           <input
             type="text"
-            disabled={true}
+            disabled
             name="name"
             id="name"
             value={customer.name}
@@ -37,7 +38,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
           </label>
           <input
             type="email"
-            disabled={true}
+            disabled
             name="email"
             id="email"
             value={customer.email}
@@ -55,7 +56,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
           </label>
           <input
             type="text"
-            disabled={true}
+            disabled
             name="agent"
             id="agent"
             value={customer.agent.name}
@@ -71,7 +72,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
           </label>
           <input
             type="tel"
-            disabled={true}
+            disabled
             name="phone"
             id="phone"
             value={utils.maskPhone(customer.phone)}
@@ -87,7 +88,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
       </label>
       <input
         type="text"
-        disabled={true}
+        disabled
         name="status"
         id="status"
         value={customer.status || ""}
@@ -101,12 +102,12 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
           >
             Valor da Venda
           </label>
-          <input
+          <CurrencyInput
             type="text"
-            disabled={true}
+            disabled
             name="saleValue"
             id="saleValue"
-            value={utils.maskCurrency(Number(customer.saleValue))}
+            value={customer.saleValue}
             className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
           />
         </div>
@@ -122,7 +123,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
             </label>
             <input
               type="text"
-              disabled={true}
+              disabled
               name="street"
               id="street"
               value={customer.address.street}
@@ -135,7 +136,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
             </label>
             <input
               type="number"
-              disabled={true}
+              disabled
               name="number"
               id="number"
               value={customer.address.number}
@@ -148,7 +149,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
             </label>
             <input
               type="text"
-              disabled={true}
+              disabled
               name="zipcode"
               id="zipcode"
               className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
@@ -163,7 +164,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
             </label>
             <input
               type="text"
-              disabled={true}
+              disabled
               name="bairro"
               id="bairro"
               value={customer.address.bairro}
@@ -176,7 +177,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
             </label>
             <input
               type="text"
-              disabled={true}
+              disabled
               name="city"
               id="city"
               value={customer.address.city}
@@ -189,7 +190,7 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
             </label>
             <input
               type="text"
-              disabled={true}
+              disabled
               name="complement"
               id="complement"
               value={customer.address.complement}
