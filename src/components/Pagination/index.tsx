@@ -22,14 +22,14 @@ const Pagination: React.FC<PaginationProps> = ({
     <div className="flex items-center justify-end mt-2 mb-1">
       <div className="flex items-center justify-end">
         <button
-          className={`flex items-center justify-center px-3 py-2 text-gray-500 ${
+          className={`bg-[#eef2f7] flex rounded-full items-center justify-center px-1.5 mr-1 py-2 text-gray-600 hover:text-gray-400 transition-all ${
             currentPage === 1 ? "text-gray-400 cursor-not-allowed" : ""
           }`}
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
         >
           <ChevronLeft className="w-4 h-4 mr-1" />
-          <span>Anterior</span>
+
         </button>
 
         {pages.map((page) => (
@@ -38,7 +38,7 @@ const Pagination: React.FC<PaginationProps> = ({
             className={`ml-1 min-w-8 min-h-8 ${
               page === currentPage
                 ? "bg-blue-400 rounded-full text-white transition-all"
-                : "text-gray-500 hover:bg-gray-300 hover:rounded-full hover:text-gray-600"
+                : "text-gray-500 hover:rounded-full transition-all hover:bg-[#eef2f7]"
             }`}
             onClick={() => onPageChange(page)}
           >
@@ -47,13 +47,13 @@ const Pagination: React.FC<PaginationProps> = ({
         ))}
 
         <button
-          className={`flex items-center justify-center px-3 py-2 text-gray-500 hover:opacity-80 ${
+          className={`flex bg-[#eef2f7] rounded-full items-center justify-center px-1.5 mx-2 py-2 text-gray-600 hover:text-gray-400 transition-all ${
             currentPage === totalPages ? "text-gray-400 cursor-not-allowed" : ""
           }`}
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
         >
-          <span>Próxima</span>
+
           <ChevronRight className="w-4 h-4 ml-1" />
         </button>
       </div>

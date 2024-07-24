@@ -16,4 +16,5 @@ export interface Customer {
   agent: { id: string; name: string };
   status: any;
   saleValue?: number;
+  createdAt: Date;
 }

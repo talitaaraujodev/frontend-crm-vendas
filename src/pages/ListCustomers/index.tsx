@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { toast } from "sonner";
 import Thead from "../../components/Thead";
 import Tbody from "../../components/Tbody";
 import ModalConfirmRemove from "../../components/ModalConfirmDelete";
@@ -7,7 +10,6 @@ import ModalView from "../../components/ModalView";
 import ModalUpdate from "../../components/ModalUpdate";
 import { customerService } from "../../services/customerService";
 import { utils } from "../../utils";
-import { toast } from "sonner";
 import Pagination from "../../components/Pagination";
 
 const ListCustomersPage: React.FC = () => {
@@ -29,6 +31,7 @@ const ListCustomersPage: React.FC = () => {
       name: "",
     },
     status: "",
+    createdAt: new Date(),
   });
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [confirmRemoveModalOpen, setConfirmRemoveModalOpen] =
@@ -101,7 +104,7 @@ const ListCustomersPage: React.FC = () => {
   const handleSearchChange = (query: string) => {
     setSearch(query);
     setCurrentPage(1);
-    fetchCustomers(query, 1);
+    fetchCustomers(query);
   };
 
   const headers: string[] = [
@@ -111,12 +114,13 @@ const ListCustomersPage: React.FC = () => {
     "Telefone",
     "Agente",
     "Status",
+    "Criado há",
     "Ações",
   ];
 
   const fetchCustomers = async (query: string = "", page: number = 1) => {
     try {
-      const LIMIT = 10;
+      const LIMIT = 8;
       const response = await customerService.findCustomers(query, LIMIT, page);
 
       setCustomers(response.customers || []);
@@ -139,7 +143,7 @@ const ListCustomersPage: React.FC = () => {
     customer.phone,
     customer.agent.name,
     <p
-      className={`inline-block ${
+      className={`inline-block max-w-xs truncate  ${
         customer.status === utils.customerStatusTypes.Sold
           ? "bg-green-100 text-green-700"
           : customer.status === utils.customerStatusTypes.NotConcluded
@@ -151,6 +155,8 @@ const ListCustomersPage: React.FC = () => {
     >
       {customer.status}
     </p>,
+    formatDistanceToNow(customer.createdAt, { locale: ptBR, addSuffix: true }),
+
     <div className="flex items-center space-x-1">
       <button
         type="button"
@@ -173,8 +179,8 @@ const ListCustomersPage: React.FC = () => {
   ]);
 
   return (
-    <div className="container mx-auto p-7">
-      <div className="overflow-x-auto shadow-lg rounded-md border-2">
+    <div className="container mx-auto px-7 py-3.5">
+      <div className="overflow-x-auto shadow-lg rounded-md border-2 bg-white">
         <table className="min-w-full">
           <Thead
             headers={headers}

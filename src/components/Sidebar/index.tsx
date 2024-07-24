@@ -23,15 +23,15 @@ const Sidebar = ({ openSidebar }: SidebarProps) => {
           </Link>
         </li>
         <li className="group font-medium text-[#1B2128] text-[1rem] px-2 rounded-lg py-3 flex items-center hover:bg-[#dce1f5] hover:text-[#2d5bff] hover:cursor-pointer">
-          <Link to="/create-agent" className="flex items-center w-full">
-            <UserRoundPlus className="pr-1 group-hover:text-[#2d5bff] text-[#9dacbe]" />
-            Criar agente
-          </Link>
-        </li>
-        <li className="group font-medium text-[#1B2128] text-[1rem] px-2 rounded-lg py-3 flex items-center hover:bg-[#dce1f5] hover:text-[#2d5bff] hover:cursor-pointer">
           <Link to="/list-customers" className="flex items-center w-full">
             <LucideRows4 className="pr-1 group-hover:text-[#2d5bff] text-[#9dacbe]" />
             Clientes
+          </Link>
+        </li>
+        <li className="group font-medium text-[#1B2128] text-[1rem] px-2 rounded-lg py-3 flex items-center hover:bg-[#dce1f5] hover:text-[#2d5bff] hover:cursor-pointer">
+          <Link to="/create-agent" className="flex items-center w-full">
+            <UserRoundPlus className="pr-1 group-hover:text-[#2d5bff] text-[#9dacbe]" />
+            Criar agente
           </Link>
         </li>
         <li className="group font-medium text-[#1B2128] text-[1rem] px-2 rounded-lg py-3 flex items-center hover:bg-[#dce1f5] hover:text-[#2d5bff] hover:cursor-pointer">

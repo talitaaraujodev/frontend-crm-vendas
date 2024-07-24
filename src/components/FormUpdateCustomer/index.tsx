@@ -27,7 +27,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
     const { name, value } = e.target;
     setUpdatedCustomer((prevCustomer) => ({
       ...prevCustomer,
-      [name]: value,
+      [name]: name === "agent" ? { id: value } : value,
     }));
   };
 
@@ -54,7 +54,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
 
   const fetchAgents = async () => {
     try {
-      const response = await agentService.findAgents();
+      const response = await agentService.findAgents('', 20);
       setAgents(response.agents);
     } catch (error) {
       console.error("Error ao listar agentes:", error);
@@ -126,7 +126,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
   const isCustomerEmpty = () => {
     const { address, agent, name, phone, status } = updatedCustomer;
     return (
-      !agent.name ||
+      !agent ||
       !phone ||
       !status ||
       !name ||
@@ -138,6 +138,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
       !address.zipcode
     );
   };
+
   return (
     <>
       <form className="flex flex-col items-start p-4">
@@ -209,13 +210,13 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
               name="agent"
               id="agent"
               required
-              value={updatedCustomer.agent.name}
+              value={updatedCustomer.agent.id}
               onChange={handleInputChange}
               className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
             >
               <option value="">Agente</option>
               {agents.map((agent: any) => (
-                <option key={agent.id} value={agent.name}>
+                <option key={agent.id} value={agent.id}>
                   {agent.name}
                 </option>
               ))}

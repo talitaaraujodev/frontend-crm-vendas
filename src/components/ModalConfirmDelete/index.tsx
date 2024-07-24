@@ -23,9 +23,10 @@ const ModalConfirmRemove: React.FC<ModalConfirmRemoveProps> = ({
       isOpen={isOpen}
       onClose={onClose}
     >
-      <div className="flex flex-col items-center justify-center px-2 py-4">
-        <span className="text-lg font-normal py-2">
-          Para prosseguir clique no botão "Sim, apagar"
+      <div className="flex flex-col items-center justify-start px-2 py-4">
+        <span className="text-base font-normal py-3">
+          Essa ação apagará permanentemente. Para prosseguir, clique no botão
+          "Sim, apagar"
         </span>
       </div>
       <div className="w-full border-b" />

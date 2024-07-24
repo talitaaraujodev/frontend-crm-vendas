@@ -99,7 +99,7 @@ const ReportGeneratePage: React.FC = () => {
       isValidDate(customer.createdAt)
         ? format(new Date(customer.createdAt), "dd/MM/yyyy")
         : "",
-      utils.verifyCustomerStatus(customer.status),
+      customer.status,
       isValidDate(customer.updatedAt)
         ? formatDistanceToNow(new Date(customer.updatedAt), {
             locale: ptBR,

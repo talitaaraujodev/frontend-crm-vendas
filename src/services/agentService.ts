@@ -18,7 +18,7 @@ class AgentService {
       status: agent.status,
     });
   }
-  async findAgents(search = "", limit: number = 1, page: number = 1) {
+  async findAgents(search = "", limit: number = 10, page: number = 1) {
     const queryParams = new URLSearchParams({
       search,
       page: page.toString(),

@@ -156,8 +156,8 @@ const ListAgentsPage: React.FC = () => {
   ]);
 
   return (
-    <div className="container mx-auto p-7">
-      <div className="overflow-x-auto shadow-lg rounded-md border-2">
+    <div className="container mx-auto px-7 py-3.5">
+      <div className="overflow-x-auto shadow-lg rounded-md border-2 bg-white">
         <table className="min-w-full">
           <Thead
             headers={headers}
