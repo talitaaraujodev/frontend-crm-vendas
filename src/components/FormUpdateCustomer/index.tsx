@@ -11,6 +11,15 @@ interface FormUpdateCustomerProps {
   onClose: () => void;
 }
 
+const CustomInput = React.forwardRef<HTMLInputElement, any>((props, ref) => (
+  <input
+    {...props}
+    ref={ref}
+    className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
+    placeholder="R$ 0,00"
+  />
+));
+
 const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
   customer,
   handleClickUpdate,
@@ -54,7 +63,7 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
 
   const fetchAgents = async () => {
     try {
-      const response = await agentService.findAgents('', 20);
+      const response = await agentService.findAgents("", 20);
       setAgents(response.agents);
     } catch (error) {
       console.error("Error ao listar agentes:", error);
@@ -253,23 +262,16 @@ const FormUpdateCustomer: React.FC<FormUpdateCustomerProps> = ({
             >
               Valor da Venda
             </label>
+
             <CurrencyInput
-              placeholder="R$ 0,00"
-              type="text"
-              name="saleValue"
-              id="saleValue"
+              InputElement={<CustomInput />}
               value={updatedCustomer.saleValue}
-              onChangeValue={(
-                event: any,
-                originalValue: any,
-                maskedValue: any
-              ) => {
+              onChangeValue={(_event: any, originalValue: any) => {
                 setUpdatedCustomer((prevCustomer: any) => ({
                   ...prevCustomer,
                   saleValue: originalValue,
                 }));
               }}
-              className="block w-full outline-none border border-[#D7D7D7] rounded-md focus:border-[#2d5bff] p-2"
             />
           </div>
         ) : null}

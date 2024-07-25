@@ -7,6 +7,16 @@ interface FormViewCustomer {
   customer: Customer;
 }
 
+const CustomInput = React.forwardRef<HTMLInputElement, any>((props, ref) => (
+  <input
+    {...props}
+    ref={ref}
+    className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
+    placeholder="R$ 0,00"
+    disabled
+  />
+));
+
 const FormViewCustomer: React.FC<FormViewCustomer> = ({
   customer,
 }: FormViewCustomer) => {
@@ -103,12 +113,16 @@ const FormViewCustomer: React.FC<FormViewCustomer> = ({
             Valor da Venda
           </label>
           <CurrencyInput
-            type="text"
-            disabled
-            name="saleValue"
-            id="saleValue"
+            InputElement={<CustomInput />}
             value={customer.saleValue}
-            className="block w-full outline-none p-2 cursor-not-allowed rounded-md font-normal disabled:bg-gray-100 disabled:text-slate-500 disabled:border-slate-200"
+            onChangeValue={function (
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              _event: React.ChangeEvent<HTMLInputElement>,
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              _originalValue: number | string
+            ): void {
+              throw new Error("Function not implemented.");
+            }}
           />
         </div>
       )}
