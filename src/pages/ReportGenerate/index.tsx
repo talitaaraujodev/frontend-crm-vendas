@@ -1,11 +1,16 @@
-import { Download } from "lucide-react";
 import { useEffect, useState } from "react";
-import { formatDistanceToNow, formatDate, format } from "date-fns";
+import { Download } from "lucide-react";
 import { ptBR } from "date-fns/locale";
-import { utils } from "../../utils";
-import { agentService } from "../../services/agentService";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
+import {
+  formatDistanceToNow,
+  format,
+  parseISO,
+  isValid,
+} from "date-fns";
+import { utils } from "../../utils";
+import { agentService } from "../../services/agentService";
 import { customerService } from "../../services/customerService";
 import { Customer } from "../../services/models/Customer";
 
@@ -53,17 +58,11 @@ const ReportGeneratePage: React.FC = () => {
 
       setAgentsOptions(data);
     } catch (error) {
-      console.error("Error list users:", error);
+      console.error("Error list agents:", error);
     }
   };
 
-  const isValidDate = (date: string) => {
-    return !isNaN(new Date(date).getTime());
-  };
-
   const generatePDF = () => {
-    console.log("Customers:", customers);
-
     const agentLabel = agent ? agent.label : "Todos";
     const statusLabel = statusCustomer
       ? utils.statusCustomerOptions.find((s) => s.value === statusCustomer)
@@ -76,13 +75,28 @@ const ReportGeneratePage: React.FC = () => {
     doc.text("Relatório de Clientes", 10, 20);
 
     doc.setFontSize(14);
-    doc.text(
-      `Período: ${startDate} -  ${
-        isValidDate(endDate) ? formatDate(endDate, "dd/MM/yyyy") : ""
-      }`,
-      10,
-      30
-    );
+
+    let periodText;
+    if (startDate && endDate) {
+      periodText = `Período: ${format(
+        parseISO(startDate),
+        "dd/MM/yyyy"
+      )} - ${format(parseISO(endDate), "dd/MM/yyyy")}`;
+    } else if (startDate) {
+      periodText = `Período: ${format(
+        parseISO(startDate),
+        "dd/MM/yyyy"
+      )} - Todos `;
+    } else if (endDate) {
+      periodText = `Período: Todos - ${format(
+        parseISO(endDate),
+        "dd/MM/yyyy"
+      )}`;
+    } else {
+      periodText = "Período: Todos";
+    }
+
+    doc.text(periodText, 10, 30);
     doc.text(`Agente: ${agentLabel}`, 10, 40);
     doc.text(`Status: ${statusLabel}`, 10, 50);
 
@@ -96,11 +110,11 @@ const ReportGeneratePage: React.FC = () => {
 
     const tableRows = customers.map((customer: any) => [
       customer.name,
-      isValidDate(customer.createdAt)
+      isValid(new Date(customer.createdAt))
         ? format(new Date(customer.createdAt), "dd/MM/yyyy")
         : "",
       customer.status,
-      isValidDate(customer.updatedAt)
+      isValid(new Date(customer.updatedAt))
         ? formatDistanceToNow(new Date(customer.updatedAt), {
             locale: ptBR,
             addSuffix: true,
@@ -132,7 +146,6 @@ const ReportGeneratePage: React.FC = () => {
           agent.value
         );
         setCustomers(response.customers);
-        console.log("AQUI :)", response);
       } catch (error) {
         console.error("Error ao listar customers:", error);
       }

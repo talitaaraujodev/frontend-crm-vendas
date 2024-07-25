@@ -50,7 +50,7 @@ class CustomerService {
       queryParams.append("agentId", agentId);
     }
 
-    const url = `${this.sufix}/report?${queryParams}`;
+    const url = `${this.sufix}/generate/report?${queryParams}`;
 
     return await fetch("GET", url);
   }

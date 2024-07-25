@@ -93,10 +93,8 @@ const ListAgentsPage: React.FC = () => {
 
   const fetchAgents = async (query: string = "", page: number = 1) => {
     try {
-      const LIMIT = 10;
+      const LIMIT = 8;
       const response = await agentService.findAgents(query, LIMIT, page);
-      console.log("total ", response.total);
-      console.log(" response", response);
       setTotalPages(
         response.total !== 1 ? Math.ceil(response.total / LIMIT) : 1
       );
